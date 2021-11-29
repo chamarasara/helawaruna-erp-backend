@@ -25,12 +25,10 @@ exports.add_new_invoice = (req, res, next) => {
             }
 
             const productList = [];
-
             for (let i = 0; i < req.body.products.length; i++) {
                 productList.push(mongoose.Types.ObjectId(req.body.products[i].id));
 
             }
-
             Finishgoodsmasters.find({
                 'id': {
                     $in: productList
@@ -554,7 +552,7 @@ exports.print_invoice = (req, res, next) => {
                         doc.switchToPage(i);
                         doc.font("Helvetica")
                         doc.fontSize(8)
-                        doc.text(`Cheques to be written in favour of "Lifeguard Manufacturing (Pvt) Ltd"`, 50,
+                        doc.text(`Cheques to be written in favour of "Helawaruna (Pvt) Ltd"`, 50,
                             680,
                             { align: "center", width: 500 });
                         doc.text(`This is a system generated document. No sign required"`, 50,
@@ -574,7 +572,7 @@ exports.print_invoice = (req, res, next) => {
                         .image('controllers/sales/logo.png', 40, 40, { width: 100 })
                         .fillColor("#444444")
                         .fontSize(18)
-                        .text("Lifeguard Manufacturing (Pvt) Ltd", 155, 80)
+                        .text("Helawaruna (Pvt) Ltd.", 200, 80)
                         .fontSize(10)
                         .text("No:114/1/12,", 200, 65, { align: "right" })
                         .text("Maharagama Road,", 200, 80, { align: "right" })
@@ -891,8 +889,8 @@ exports.print_invoice = (req, res, next) => {
                         const transportcostposition = subtotalPosition + 15;
                         for (let i = 0; i < additionalCharges.length; i++) {
                             const info = additionalCharges[i]
-                            console.log("reason",info.reason)
-                            let amount =info.amount
+                            console.log("reason", info.reason)
+                            let amount = info.amount
                             console.log("amount", amount)
                             generateAdditionalCharges(
                                 doc,
@@ -1054,7 +1052,7 @@ exports.print_dispatch_note = (req, res, next) => {
                         .image('controllers/sales/logo.png', 40, 40, { width: 100 })
                         .fillColor("#444444")
                         .fontSize(18)
-                        .text("Lifeguard Manufacturing (Pvt) Ltd", 155, 80)
+                        .text("Helawaruna(Pvt)Ltd.", 155, 80)
                         .fontSize(10)
                         .text("No:114/1/12,", 200, 65, { align: "right" })
                         .text("Maharagama Road,", 200, 80, { align: "right" })
