@@ -569,10 +569,10 @@ exports.print_invoice = (req, res, next) => {
                 //generate pdf header
                 function generateHeader(doc) {
                     doc
-                        .image('controllers/sales/logo.png', 40, 40, { width: 100 })
+                        .image('controllers/sales/logo.png', 40, 65, { width: 120 })
                         .fillColor("#444444")
                         .fontSize(18)
-                        .text("Helawaruna (Pvt) Ltd.", 200, 80)
+                        .text("Helawaruna (Pvt) Ltd.", 210, 80)
                         .fontSize(10)
                         .text("No:114/1/12,", 200, 65, { align: "right" })
                         .text("Maharagama Road,", 200, 80, { align: "right" })
@@ -631,7 +631,7 @@ exports.print_invoice = (req, res, next) => {
                         doc
                             .fillColor("#444444")
                             .fontSize(15)
-                            .text("Invoice", 50, 160);
+                            .text("Proforma Invoice", 50, 160);
 
                         generateHr(doc, 185);
 
@@ -641,9 +641,9 @@ exports.print_invoice = (req, res, next) => {
                             .text(`Invoice Number: ${data.invoiceNumber}`, 50, 200)
                             .text(`Quotation Number: ${quotationNumber}`, 50, 215)
                             .text(`Invoice Date: ${moment(data.date).format('DD/MM/YYYY')}`, 50, 230)
-                            .text(`Due Date: ${moment(data.date).add('d', creditPeriod).format('DD/MM/YYYY')}`, 50, 245)
-                            .text(`Credit Period: ${creditPeriod} days`, 50, 260)
-                            .text(`Your Reference: ${data.reference}`, 50, 275)
+                            // .text(`Due Date: ${moment(data.date).add('d', creditPeriod).format('DD/MM/YYYY')}`, 50, 245)
+                            // .text(`Credit Period: ${creditPeriod} days`, 50, 260)
+                            .text(`Your Reference: ${data.reference}`, 50, 245)
                             .text(`${companyName}`, 350, 200)
                             .font("Helvetica")
                             .text(`${no},${lane}`, 350, 215)
@@ -668,7 +668,7 @@ exports.print_invoice = (req, res, next) => {
                     doc
                         .strokeColor("#aaaaaa")
                         .lineWidth(1)
-                        .moveTo(490, y)
+                        .moveTo(475, y)
                         .lineTo(550, y)
                         .stroke();
                 }
@@ -682,7 +682,7 @@ exports.print_invoice = (req, res, next) => {
                         .text(quantity, 250, y, { width: 60, align: "right" })
                         .text(rate, 300, y, { width: 60, align: "right" })
                         .text(discount, 350, y, { width: 50, align: "right" })
-                        .text(discountAmount, 400, y, { width: 70, align: "right" })
+                        
                         .text(total, 0, y, { align: "right" });
                 }
                 function generateTableBottom(doc, y, productCode, productName, uom, quantity, rate, discount, discountAmount, total) {
@@ -695,7 +695,7 @@ exports.print_invoice = (req, res, next) => {
                         .text(rate, 300, y, { width: 60, align: "right" })
                         .text(discount, 350, y, { width: 50, align: "right" })
                         .text(discountAmount, 400, y, { width: 70, align: "right" })
-                        .text(total, 0, y, { align: "right" });
+                        .text(total, 450, y, { align: "right" });
                 }
                 function generateAdditionalCharges(doc, y, reason, amount) {
                     doc
@@ -704,7 +704,7 @@ exports.print_invoice = (req, res, next) => {
                         .text(reason, 400, y, { width: 70, align: "right" })
                         .text(amount, 0, y, { align: "right" });
                 }
-                function generateTableRowTop(doc, y, productCode, productName, quantity, rate, discount, discountAmount, total) {
+                function generateTableRowTop(doc, y, productCode, productName, quantity, rate, discount, total) {
                     doc
                         .font("Helvetica-Bold")
                         .fontSize(9)
@@ -713,8 +713,7 @@ exports.print_invoice = (req, res, next) => {
                         .text(quantity, 250, y, { width: 60, align: "right" })
                         .text(rate, 300, y, { width: 60, align: "right" })
                         .text(discount, 350, y, { width: 50, align: "right" })
-                        .text(discountAmount, 400, y, { width: 70, align: "right" })
-                        .text(total, 0, y, { align: "right" });
+                        .text(total, 450, y, { width: 100,align: "right" });
                 }
                 function formatNumber(num) {
                     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
@@ -842,7 +841,6 @@ exports.print_invoice = (req, res, next) => {
                             "Quantity",
                             "Rate",
                             "Dis(%)",
-                            "Dis Amount",
                             "Total"
                         );
                         generateHr(doc, invoiceTableTop + 20);
