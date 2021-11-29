@@ -6,7 +6,7 @@ const auth = require('../../middleware/auth')
 const UserRoles = require('../../models/UserRoles');
 
 //New userRole
-router.post('/new-user-role', auth, [
+router.post('/new-user-role', [
     check('userTypeCode', 'User Type ID is required').exists(),
     check('userTypeName', 'User Type Name is required').exists(),
 ],
