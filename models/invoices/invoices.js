@@ -8,6 +8,7 @@ const InvoicesSchema = new mongoose.Schema({
     remarks: { type: String },
     reference: { type: String, default: "-" },
     transportCost: { type: Number, default: 0 },
+    additionalCharges: [{}],
     userId: { type: String },
     userName: { type: String },
     userRole: { type: String },

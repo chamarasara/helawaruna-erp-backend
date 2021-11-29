@@ -42,7 +42,7 @@ app.use('/api/inventory/raw-material', require('./routes/api/inventory/rawMateri
 app.use('/api/inventory/packing-material', require('./routes/api/inventory/packingMaterial'))
 
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
