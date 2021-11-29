@@ -3,5 +3,3 @@
     "jwtSecret" : "token",
     "CLOUDINARY_URL":"cloudinary: //my_key:615495881369934@dv0rm2wzo"
 }
-//mongodb+srv://chamara:casperbuster@helawarunaerp.mbwsv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
-//mongodb+srv://chamara:lifelineerp123@erp.vhxyn.mongodb.net/ERP?retryWrites=true&w=majority
