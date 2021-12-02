@@ -25,6 +25,8 @@ exports.purchase_order_raw_add_new = (req, res, next) => {
                 userName: req.body.user.user.userName,
                 userRole: req.body.user.user.userRole,
                 rawMaterials: req.body.rawMaterials,
+                conditions: req.body.conditions,
+                reference: req.body.reference,
                 order_state: "Pending",
                 orderNumber: getOrderNumber()
             });
@@ -627,11 +629,18 @@ exports.print_purchase_orders_raw = (req, res, next) => {
                             710,
                             { align: "center", width: 500 });
                     }
-                    //set userName 
+                    const condition = result.map(data => {
+                        return data.conditions
+                    })
                     for (i = range.start, end = range.start + range.count, range.start <= end; i < end; i++) {
                         doc.switchToPage(i);
-                        doc.text(`This is system generated document. No sign required`, 50,
-                            700,
+                        
+                        console.log(result.conditions)
+                        doc.text(`Terms & conditions`, 50,
+                            670,
+                            { align: "center", underline:true , width: 500 });
+                        doc.text(`${condition}`, 50,
+                            680,
                             { align: "center", width: 500 });
                     }
                     // manually flush pages that have been buffered
@@ -646,10 +655,10 @@ exports.print_purchase_orders_raw = (req, res, next) => {
                 //generate pdf header
                 function generateHeader(doc) {
                     doc
-                        .image('controllers/sales/logo.png', 40, 40, { width: 100 })
+                        .image('controllers/sales/logo.png', 40, 65, { width: 120 })
                         .fillColor("#444444")
                         .fontSize(18)
-                        .text("Lifeguard Manufacturing (Pvt)Ltd.", 155, 80)
+                        .text("Helawaruna (Pvt) Ltd.", 210, 80)
                         .fontSize(10)
                         .text("No:114/1/12,", 200, 65, { align: "right" })
                         .text("Maharagama Road,", 200, 80, { align: "right" })
@@ -704,6 +713,7 @@ exports.print_purchase_orders_raw = (req, res, next) => {
                             .text(`Order Number: ${data.orderNumber}`, 50, 200)
                             .text(`Order Date: ${moment(data.date).format('DD/MM/YYYY')}`, 50, 215)
                             .text(`Created By: ${data.userName}`, 50, 230)
+                            .text(`Your reference: ${data.reference}`, 50, 245)
                             .text(`${companyName}`, 350, 200)
                             .font("Helvetica")
                             .text(`${no},${lane}`, 350, 215)
@@ -956,10 +966,10 @@ exports.print_purchase_orders_raw_grn = (req, res, next) => {
                 //generate pdf header
                 function generateHeader(doc) {
                     doc
-                        .image('controllers/sales/logo.png', 40, 40, { width: 100 })
+                        .image('controllers/sales/logo.png', 40, 65, { width: 100 })
                         .fillColor("#444444")
                         .fontSize(18)
-                        .text("Helawaruna(Pvt)Ltd.", 155, 80)
+                        .text("Helawaruna(Pvt)Ltd.", 210, 80)
                         .fontSize(10)
                         .text("No:114/1/12,", 200, 65, { align: "right" })
                         .text("Maharagama Road,", 200, 80, { align: "right" })
@@ -1013,10 +1023,9 @@ exports.print_purchase_orders_raw_grn = (req, res, next) => {
                             .font("Helvetica-Bold")
                             .text(`Order Number: ${data.orderNumber}`, 50, 200)
                             .text(`Order Date: ${moment(data.date).format('DD/MM/YYYY')}`, 50, 215)
-                            .text(`Created By: ${data.userName}`, 50, 230)
+                            // .text(`Created By: ${data.userName}`, 50, 230)
                             .text(`${companyName}`, 350, 200)
                             .font("Helvetica")
-                            .text(`${no},${lane}`, 350, 215)
                             .text(`${city}, ${country}, ${postalCode}`, 350, 230)
                             .text(`${email}`, 350, 245)
                             .text(`${mobileNo}`, 350, 260)
