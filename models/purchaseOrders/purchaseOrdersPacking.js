@@ -8,6 +8,8 @@ const PurchaseOrdersPackingSchema = new mongoose.Schema({
     disable_reason: { type: String },
     orderNumber: { type: String },
     packingMaterials: { type: Array },
+    conditions: { type: String },
+    reference: { type: String },
     grnDetails: [{}],
     bankPaymentsDetails: [{}],
     cashPaymentsDetails: [{}],

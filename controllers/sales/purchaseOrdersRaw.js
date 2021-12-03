@@ -635,7 +635,6 @@ exports.print_purchase_orders_raw = (req, res, next) => {
                     for (i = range.start, end = range.start + range.count, range.start <= end; i < end; i++) {
                         doc.switchToPage(i);
                         
-                        console.log(result.conditions)
                         doc.text(`Terms & conditions`, 50,
                             670,
                             { align: "center", underline:true , width: 500 });
@@ -703,7 +702,7 @@ exports.print_purchase_orders_raw = (req, res, next) => {
                         doc
                             .fillColor("#444444")
                             .fontSize(15)
-                            .text("Purchase Order RM", 50, 160);
+                            .text("Purchase Order", 50, 160);
 
                         generateHr(doc, 185);
 
