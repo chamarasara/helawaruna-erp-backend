@@ -681,8 +681,7 @@ exports.print_invoice = (req, res, next) => {
                         .text(productName, 90, y, { width: 180 })
                         .text(quantity, 250, y, { width: 60, align: "right" })
                         .text(rate, 300, y, { width: 60, align: "right" })
-                        .text(discount, 350, y, { width: 50, align: "right" })
-                        
+                        .text(discount, 370, y, { width: 50, align: "right" })                        
                         .text(total, 0, y, { align: "right" });
                 }
                 function generateTableBottom(doc, y, productCode, productName, uom, quantity, rate, discount, discountAmount, total) {
@@ -712,14 +711,13 @@ exports.print_invoice = (req, res, next) => {
                         .text(productName, 90, y, { width: 180 })
                         .text(quantity, 250, y, { width: 60, align: "right" })
                         .text(rate, 300, y, { width: 60, align: "right" })
-                        .text(discount, 350, y, { width: 50, align: "right" })
+                        .text(discount, 370, y, { width: 50, align: "right" })
                         .text(total, 450, y, { width: 100,align: "right" });
                 }
                 function formatNumber(num) {
                     return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
                 }
-                function getSubTotal(result) {
-                    console.log(result)
+                function getSubTotal(result) {                
                     const getTotal = result.map(data => {
                         const quantities = data.products.map(data => {
                             //console.log("quantity", data.quantity)
@@ -738,7 +736,7 @@ exports.print_invoice = (req, res, next) => {
                             let quantity = quantities[i]
                             let discount = discounts[i]
                             let rate = rates[i]
-                            totalValue[i] = (quantity * rate) / 100 * (100 - discount);
+                            totalValue[i] = (quantity * rate) / 100 * (discount);
 
                             //console.log(totalValue, "Total Value")
                         }
@@ -748,18 +746,7 @@ exports.print_invoice = (req, res, next) => {
                         return formatNumber(total.toFixed(2))
                     })
                     return getTotal
-                }
-                function getTransportCost(result) {
-                    console.log("getTransportCost", result)
-                    let data = result.map(data => {
-                        if (!data.transportCost) {
-                            return 0.00
-                        } else {
-                            return data.transportCost
-                        }
-                    })
-                    return data[0]
-                }
+                }                
                 function getAdditionalCharges(result) {
                     let data = result.map(data => {
                         if (!data.additionalCharges) {
@@ -804,7 +791,7 @@ exports.print_invoice = (req, res, next) => {
                             let quantity = quantities[i]
                             let discount = discounts[i]
                             let rate = rates[i]
-                            totalValue[i] = (quantity * rate) / 100 * (100 - discount);
+                            totalValue[i] = (quantity * rate) / 100 * (discount);
 
                             //console.log(totalValue, "Total Value")
                         }
@@ -850,7 +837,7 @@ exports.print_invoice = (req, res, next) => {
                                 const quantity = productsDetails[i]
                                 const position = invoiceTableTop + (i + 1) * 30;
                                 let totalValue = quantity.sellingPrice * quantity.quantity
-                                let discount = (100 - quantity.discount) / 100
+                                let discount = (quantity.discount) / 100
                                 let discountValue = totalValue * discount
                                 let discountAmount = totalValue - discountValue
                                 let rate = quantity.sellingPrice
@@ -886,9 +873,10 @@ exports.print_invoice = (req, res, next) => {
                         );
                         const transportcostposition = subtotalPosition + 15;
                         for (let i = 0; i < additionalCharges.length; i++) {
-                            const info = additionalCharges[i]
-                            console.log("reason", info.reason)
+                            const info = additionalCharges[i]                          
+                            let reason = info.reason
                             let amount = info.amount
+                            console.log("reason", reason)
                             console.log("amount", amount)
                             generateAdditionalCharges(
                                 doc,
@@ -898,8 +886,8 @@ exports.print_invoice = (req, res, next) => {
                                 "",
                                 "",
                                 "",
-                                "fuck",
-                                info.reason,
+                                "",
+                                reason,
                                 amount
                             );
 
